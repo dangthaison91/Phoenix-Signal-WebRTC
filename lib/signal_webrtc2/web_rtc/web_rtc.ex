@@ -17,8 +17,10 @@ defmodule SignalWebrtc2.WebRTC do
       [%Room{}, ...]
 
   """
-  def list_rooms do
-    Repo.all(Room)
+  def list_rooms(params \\ %{}) do
+    Room
+    |> Room.filter(params)
+    |> Repo.all()
   end
 
   @doc """
@@ -60,6 +62,7 @@ defmodule SignalWebrtc2.WebRTC do
         where: r.code == ^code,
         select: r
       )
+
     # Repo.get_by!(Room, code: code)
     Repo.one!(query)
   end
